@@ -18,3 +18,4 @@
 ## Put it online (free)
 `npm run build` then upload the `dist` folder to Netlify (drag and drop),
 or push the project to GitHub and import it on Vercel.
+# Protfolio
