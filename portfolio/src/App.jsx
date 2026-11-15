@@ -176,92 +176,104 @@ html,body{overflow-x:hidden;max-width:100vw;width:100%}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 @keyframes marquee{to{transform:translateX(-50%)}}
 
-/* ==================== AI AGENT UNIQUE LIVELY & EYE-CATCHING ANIMATIONS ==================== */
-@keyframes aiLivelyFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-8px) rotate(2deg) scale(1.02); }
-  50% { transform: translateY(-3px) rotate(-1.5deg) scale(1.01); }
-  75% { transform: translateY(-10px) rotate(1.5deg) scale(1.03); }
-}
-@keyframes aiWiggleNudge {
-  0%, 80%, 100% { transform: rotate(0deg) scale(1); }
-  82% { transform: rotate(-9deg) scale(1.08); }
-  85% { transform: rotate(9deg) scale(1.08); }
-  88% { transform: rotate(-6deg) scale(1.05); }
-  91% { transform: rotate(6deg) scale(1.04); }
-  94% { transform: rotate(-2deg) scale(1.02); }
-}
-@keyframes aiSonarWave {
-  0% { transform: scale(0.9); opacity: 0.85; border: 2px solid var(--accent2); }
-  50% { opacity: 0.4; border: 2px solid var(--accent); }
-  100% { transform: scale(1.4, 1.65); opacity: 0; border: 1px solid var(--accent2); }
-}
-@keyframes aiSonarWave2 {
-  0% { transform: scale(0.9); opacity: 0; }
-  25% { opacity: 0.7; border: 2px solid var(--accent); }
-  100% { transform: scale(1.55, 1.9); opacity: 0; border: 1px solid transparent; }
-}
+/* ==================== AI AGENT POPULAR & UNIQUE MODERN ANIMATIONS ==================== */
 @keyframes aiBorderBeam {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes aiFloatGentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-3px) rotate(-1deg);
+  }
+}
+@keyframes aiGlowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 4px 18px color-mix(in srgb, var(--accent2) 45%, transparent))
+            drop-shadow(0 0 28px color-mix(in srgb, var(--accent) 30%, transparent));
+  }
+  50% {
+    filter: drop-shadow(0 8px 28px color-mix(in srgb, var(--accent2) 75%, transparent))
+            drop-shadow(0 0 42px color-mix(in srgb, var(--accent) 55%, transparent));
+  }
+}
+@keyframes aiParticleOrbit {
+  0% { transform: rotate(0deg) translateX(var(--orbit-r, 16px)) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(var(--orbit-r, 16px)) rotate(-360deg); }
+}
+@keyframes aiAntennaBlink {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); filter: drop-shadow(0 0 6px #19e6ff); }
+}
+@keyframes aiHoloSpin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-@keyframes aiAttentionGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent2) 60%, transparent)) drop-shadow(0 0 20px color-mix(in srgb, var(--accent) 35%, transparent));
-  }
-  50% {
-    filter: drop-shadow(0 0 22px color-mix(in srgb, var(--accent2) 90%, transparent)) drop-shadow(0 0 42px color-mix(in srgb, var(--accent) 60%, transparent));
-  }
-}
-@keyframes aiWaveHand {
-  0%, 100% { transform: rotate(0deg); }
-  20%, 60% { transform: rotate(18deg); }
-  40%, 80% { transform: rotate(-18deg); }
-}
-@keyframes aiOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes aiOrbitRev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
 @keyframes aiPulseCore {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px var(--accent2)); opacity: .9; }
-  50% { transform: scale(1.12); filter: drop-shadow(0 0 18px var(--accent2)); opacity: 1; }
+  0%, 100% { transform: scale(1); opacity: .94; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+@keyframes aiEyeBlink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  94% { transform: scaleY(.1); }
+}
+@keyframes aiTooltipFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes aiWindowEnter {
+  0% { opacity: 0; transform: scale(.92) translateY(18px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes aiMsgEnter {
+  0% { opacity: 0; transform: translateY(10px) scale(.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes aiBubblePop {
+  0% { opacity: 0; transform: translateY(8px) scale(.94); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 @keyframes aiEq1 { 0%, 100% { height: 4px; } 50% { height: 14px; } }
 @keyframes aiEq2 { 0%, 100% { height: 13px; } 50% { height: 5px; } }
 @keyframes aiEq3 { 0%, 100% { height: 6px; } 50% { height: 16px; } }
 @keyframes aiEq4 { 0%, 100% { height: 15px; } 50% { height: 7px; } }
-@keyframes aiEyeBlink {
-  0%, 88%, 100% { transform: scaleY(1); }
-  94% { transform: scaleY(.1); }
+
+.ai-float-gentle {
+  animation: aiFloatGentle 4.2s ease-in-out infinite;
 }
-@keyframes aiWindowEnter {
-  0% { opacity: 0; transform: scale(.92) translateY(22px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
+.ai-glow-pulse {
+  animation: aiGlowPulse 3.5s ease-in-out infinite;
 }
-@keyframes aiMsgEnter {
-  0% { opacity: 0; transform: translateY(12px) scale(.97); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
+.ai-beam-spin {
+  animation: aiBorderBeam 4s linear infinite;
 }
-@keyframes aiBubblePop {
-  0% { opacity: 0; transform: translateY(10px) scale(.9); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
+.ai-holo-spin {
+  animation: aiHoloSpin 9s linear infinite;
 }
-.ai-lively-float { animation: aiLivelyFloat 4.2s ease-in-out infinite, aiWiggleNudge 6.5s ease-in-out infinite; }
-.ai-sonar-wave { animation: aiSonarWave 2.2s cubic-bezier(0, 0.2, 0.8, 1) infinite; }
-.ai-sonar-wave-2 { animation: aiSonarWave2 2.2s 1.1s cubic-bezier(0, 0.2, 0.8, 1) infinite; }
-.ai-border-beam {
-  background: conic-gradient(from 0deg, transparent 0deg, var(--accent) 90deg, var(--accent2) 180deg, #19e6ff 270deg, transparent 360deg);
-  animation: aiBorderBeam 3.6s linear infinite;
+.ai-pulse-core {
+  animation: aiPulseCore 2.6s ease-in-out infinite;
 }
-.ai-attention-glow { animation: aiAttentionGlow 2.8s ease-in-out infinite; }
-.ai-wave-hand { display: inline-block; transform-origin: 70% 70%; animation: aiWaveHand 2s ease-in-out infinite; }
-.ai-orbit { animation: aiOrbit 8s linear infinite; }
-.ai-orbit-rev { animation: aiOrbitRev 6s linear infinite; }
-.ai-pulse-core { animation: aiPulseCore 2.2s ease-in-out infinite; }
-.ai-window-anim { animation: aiWindowEnter .32s cubic-bezier(.16,1,.3,1) forwards; transform-origin: bottom right; }
-.ai-msg-anim { animation: aiMsgEnter .28s cubic-bezier(.16,1,.3,1) forwards; }
-.ai-bubble-anim { animation: aiBubblePop .35s cubic-bezier(.16,1,.3,1) forwards; }
+.ai-tooltip-float {
+  animation: aiTooltipFloat 3s ease-in-out infinite;
+}
+.ai-window-anim {
+  animation: aiWindowEnter .28s cubic-bezier(.16,1,.3,1) forwards;
+  transform-origin: bottom right;
+}
+.ai-msg-anim {
+  animation: aiMsgEnter .24s cubic-bezier(.16,1,.3,1) forwards;
+}
+.ai-bubble-anim {
+  animation: aiBubblePop .3s cubic-bezier(.16,1,.3,1) forwards;
+}
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-@media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}.reveal{opacity:1!important;transform:none!important;transition:none!important}.ai-lively-float,.ai-sonar-wave,.ai-sonar-wave-2,.ai-border-beam,.ai-attention-glow,.ai-wave-hand,.ai-orbit,.ai-orbit-rev,.ai-pulse-core,.ai-window-anim,.ai-msg-anim,.ai-bubble-anim{animation:none!important}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}.reveal{opacity:1!important;transform:none!important;transition:none!important}.ai-float-gentle,.ai-glow-pulse,.ai-beam-spin,.ai-holo-spin,.ai-pulse-core,.ai-tooltip-float,.ai-window-anim,.ai-msg-anim,.ai-bubble-anim{animation:none!important}}
 `;
 
 /* ---------------- hooks ---------------- */
@@ -956,32 +968,33 @@ function AIAgentAvatar({ isTyping = false, size = "md" }) {
   const dim = size === "sm" ? "w-8 h-8" : size === "lg" ? "w-12 h-12" : "w-10 h-10";
   return (
     <div className={`relative ${dim} flex items-center justify-center shrink-0`}>
-      {/* Outer Holographic Orbital Ring */}
+      {/* Outer Sleek Glowing Halo Ring */}
       <div
-        className="ai-orbit absolute inset-0 rounded-full border border-dashed border-[var(--accent2)] opacity-80"
-        style={{ animationDuration: isTyping ? "3s" : "8s" }}
+        className="ai-holo-spin absolute inset-0 rounded-full border border-cyan-400/40"
+        style={{
+          borderTopColor: "var(--accent2)",
+          borderRightColor: "transparent",
+          borderBottomColor: "var(--accent)",
+          borderLeftColor: "transparent",
+          animationDuration: isTyping ? "3s" : "9s",
+        }}
       />
-      {/* Inner Rotating Ring */}
-      <div
-        className="ai-orbit-rev absolute inset-[2px] rounded-full border border-dotted border-[var(--accent)] opacity-60"
-        style={{ animationDuration: isTyping ? "2s" : "6s" }}
-      />
-      {/* Pulsing Core Sphere */}
-      <div className="ai-pulse-core relative flex items-center justify-center w-[80%] h-[80%] rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent2)] shadow-[0_0_12px_color-mix(in_srgb,var(--accent2)_60%,transparent)]">
-        {/* Hologram robot face with blinking eyes */}
-        <svg viewBox="0 0 24 24" className="w-[65%] h-[65%] fill-white" aria-hidden="true">
+      {/* Inner Pulsing Gradient Core */}
+      <div className="ai-pulse-core relative flex items-center justify-center w-[82%] h-[82%] rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent2)] shadow-[0_0_12px_color-mix(in_srgb,var(--accent2)_55%,transparent)]">
+        {/* Modern Friendly Robot Face */}
+        <svg viewBox="0 0 24 24" className="w-[62%] h-[62%] fill-white" aria-hidden="true">
           {/* Antenna */}
           <circle cx="12" cy="3" r="1.5" />
           <path d="M12 4.5v2" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
           {/* Head */}
           <rect x="4" y="6.5" width="16" height="12" rx="3.5" />
-          {/* Eyes with blink animation */}
+          {/* Eyes with smooth blinking */}
           <g style={{ transformOrigin: "12px 11px", animation: "aiEyeBlink 4s ease-in-out infinite" }}>
-            <rect x="7" y="10" width="3" height="3" rx="1" fill="#19e6ff" />
-            <rect x="14" y="10" width="3" height="3" rx="1" fill="#19e6ff" />
+            <rect x="7.5" y="10" width="3" height="3" rx="1" fill="#19e6ff" />
+            <rect x="13.5" y="10" width="3" height="3" rx="1" fill="#19e6ff" />
           </g>
-          {/* Mouth / Speaker bar */}
-          <path d="M8.5 15h7" stroke="#19e6ff" strokeWidth="1.5" strokeLinecap="round" />
+          {/* Smile / Visor */}
+          <path d="M9 15.2c1 .8 5 .8 6 0" stroke="#19e6ff" strokeWidth="1.5" strokeLinecap="round" />
         </svg>
       </div>
     </div>
@@ -1257,35 +1270,32 @@ function JoyBot() {
 
   return (
     <>
-      {/* Floating Chat Trigger Button with Attention-Grabbing Lively Motion & Sonar Beacon */}
-      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end pointer-events-auto">
-        {/* Eye-catching Floating Thought Bubble */}
+      {/* Floating Chat Trigger Button with Modern Premium Aurora Animation */}
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end pointer-events-auto select-none">
+        {/* Sleek Floating Prompt Pill */}
         {showBubble && !open && (
           <div
             onClick={() => {
               setOpen(true);
               setShowBubble(false);
             }}
-            className="ai-bubble-anim mb-3.5 flex items-center gap-2.5 max-w-[270px] sm:max-w-xs rounded-2xl px-3.5 py-2.5 surface border border-[var(--accent2)] shadow-[0_10px_35px_color-mix(in_srgb,var(--accent2)_35%,transparent)] backdrop-blur-2xl text-xs cursor-pointer group hover:scale-105 active:scale-95 transition-all select-none"
+            className="ai-bubble-anim mb-3 flex items-center gap-2 rounded-2xl px-3.5 py-2 surface border border-cyan-500/30 shadow-[0_8px_25px_-4px_rgba(25,230,255,0.25)] backdrop-blur-xl text-xs cursor-pointer group hover:scale-105 active:scale-95 transition-all"
           >
-            <span className="text-xl ai-wave-hand">👋</span>
-            <div className="flex-1 leading-snug">
-              <p className="font-extrabold text-[var(--accent2)] flex items-center gap-1.5">
-                <span>Ask JoyBot AI</span>
-                <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-400 font-mono border border-cyan-400/30">
-                  NEW
-                </span>
-              </p>
-              <p className="text-[11px] muted group-hover:text-[var(--text)] transition-colors mt-0.5">
-                Click here to explore Joy's skills & CV!
-              </p>
+            <span className="text-base select-none">✨</span>
+            <div className="flex items-center gap-1.5">
+              <span className="font-bold text-[var(--text)] group-hover:text-[var(--accent2)] transition-colors">
+                Ask JoyBot
+              </span>
+              <span className="text-[10px] mono text-cyan-400 font-semibold px-1.5 py-0.2 rounded-full bg-cyan-500/10 border border-cyan-500/20">
+                AI
+              </span>
             </div>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setShowBubble(false);
               }}
-              className="text-xs muted hover:text-[var(--text)] p-1 rounded-full hover:bg-white/10 transition cursor-pointer"
+              className="text-xs muted hover:text-[var(--text)] ml-1 p-0.5 rounded-full hover:bg-white/10 transition cursor-pointer"
               title="Dismiss"
             >
               ✕
@@ -1293,13 +1303,8 @@ function JoyBot() {
           </div>
         )}
 
-        {/* Outer Container with Lively Multi-Axis Floating & Periodic Playful Nudge */}
-        <div className="ai-lively-float relative flex items-center justify-center">
-          {/* Sonar Beacon Radar Waves Radiating Outward */}
-          <span className="ai-sonar-wave absolute inset-0 rounded-full pointer-events-none" />
-          <span className="ai-sonar-wave-2 absolute inset-0 rounded-full pointer-events-none" />
-
-          {/* The Interactive High-Tech Pill Button */}
+        {/* Main Bot Button with Silky Smooth Levitation & Ambient Breathing Glow */}
+        <div className="ai-smooth-float">
           <button
             onClick={() => {
               setOpen(!open);
@@ -1307,38 +1312,33 @@ function JoyBot() {
             }}
             title={open ? "Close JoyBot AI" : "Chat with JoyBot (AI Assistant)"}
             aria-label="Toggle JoyBot AI Assistant"
-            className="ai-attention-glow group relative flex items-center gap-2.5 sm:gap-3 rounded-full p-2 pr-4 sm:p-2.5 sm:pr-5 bg-[var(--surface)] backdrop-blur-2xl border border-[var(--accent2)] shadow-[0_0_30px_color-mix(in_srgb,var(--accent2)_55%,transparent)] transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer overflow-hidden"
+            className="ai-aura-breathe group relative flex items-center gap-2.5 sm:gap-3 rounded-full p-2 pr-4 sm:p-2.5 sm:pr-4.5 bg-[var(--surface)] backdrop-blur-2xl border border-cyan-500/40 transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-95 cursor-pointer shadow-xl"
           >
-            {/* Spinning Rainbow / Cyan Border Beam */}
-            <span className="ai-border-beam absolute inset-[-150%] rounded-full opacity-65 pointer-events-none" />
-            {/* Inner surface overlay to keep background clean & readable */}
-            <span className="absolute inset-[1.5px] rounded-full bg-[color-mix(in_srgb,var(--surface)_94%,transparent)] backdrop-blur-xl pointer-events-none" />
-
-            {/* Avatar with Live Blinking Hologram and Orbit Rings */}
-            <div className="relative z-10">
+            {/* Mascot Avatar with Live Blinking Hologram and Halo Ring */}
+            <div className="relative">
               <AIAgentAvatar isTyping={typing} size="sm" />
-              <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-80" />
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+              <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
               </span>
             </div>
 
             {/* Text Info + AI Pill */}
-            <div className="relative z-10 flex flex-col text-left">
+            <div className="flex flex-col text-left">
               <div className="flex items-center gap-1.5">
                 <span className="text-xs sm:text-sm font-extrabold tracking-tight text-[var(--text)] group-hover:text-[var(--accent2)] transition-colors">
                   JoyBot
                 </span>
-                <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)] text-white shadow-[0_0_10px_var(--accent2)] animate-pulse">
+                <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)] text-white shadow-sm">
                   AI
                 </span>
               </div>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="text-[10px] mono text-emerald-400 font-bold flex items-center gap-1">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span className="text-[10px] mono text-emerald-500 font-semibold flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   Online
                 </span>
-                <span className="text-[9px] mono muted hidden xs:inline">· Ready</span>
+                <span className="text-[9px] mono muted hidden xs:inline">· Assistant</span>
               </div>
             </div>
           </button>
