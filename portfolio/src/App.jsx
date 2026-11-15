@@ -99,25 +99,28 @@ def create_post(data: PostIn, db: Session = Depends(get_db),
     return post`;
 
 const STYLES = `
-:root{--bg:#eceeff;--surface:rgba(255,255,255,.78);--line:#c9cef3;--text:#12123a;--muted:#4c5088;--accent:#2f4bff;--accent2:#0077a8;--onacc:#fff;--code:#0b0d22;--btn:#161c85;--btntext:#fff;--btnline:#3b4190}
-.dark{--bg:#05070f;--surface:rgba(12,17,40,.72);--line:#1d2552;--text:#eaf0ff;--muted:#8e9ad0;--accent:#7b9bff;--accent2:#19e6ff;--onacc:#05070f;--code:#070a18;--btn:#f3f6ff;--btntext:#05070f;--btnline:rgba(234,240,255,.5)}
+:root{--bg:#eceeff;--surface:rgba(255,255,255,.82);--line:#c9cef3;--text:#12123a;--muted:#4c5088;--accent:#2f4bff;--accent2:#0077a8;--onacc:#fff;--code:#0b0d22;--btn:#161c85;--btntext:#fff;--btnline:#3b4190}
+.dark{--bg:#05070f;--surface:rgba(12,17,40,.75);--line:#1d2552;--text:#eaf0ff;--muted:#8e9ad0;--accent:#7b9bff;--accent2:#19e6ff;--onacc:#05070f;--code:#070a18;--btn:#f3f6ff;--btntext:#05070f;--btnline:rgba(234,240,255,.5)}
 html{scroll-behavior:smooth}
-.page{background:var(--bg);color:var(--text);transition:background .3s,color .3s;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+html,body{overflow-x:hidden;max-width:100vw;width:100%}
+.page{background:var(--bg);color:var(--text);transition:background .3s,color .3s;font-family:'Plus Jakarta Sans',system-ui,sans-serif;overflow-x:hidden;max-width:100vw;width:100%}
 .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
 .muted{color:var(--muted)} .acc{color:var(--accent)} .acc2{color:var(--accent2)}
-.surface{background:var(--surface);border:1px solid var(--line);backdrop-filter:blur(10px)}
-.bggrid{position:fixed;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;opacity:.4;-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 15%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 30%,#000 15%,transparent 75%);animation:gridmove 10s linear infinite}
+.surface{background:var(--surface);border:1px solid var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.bggrid{position:fixed;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;opacity:.35;-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 15%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 30%,#000 15%,transparent 75%);animation:gridmove 10s linear infinite}
 .blob{position:fixed;border-radius:9999px;filter:blur(100px);opacity:.28;animation:floaty 14s ease-in-out infinite}
 .lineb{border:1px solid var(--line)}
-.btn{display:inline-block;border-radius:8px;padding:.6rem 1.2rem;font-size:.875rem;font-weight:700;transition:transform .15s,opacity .15s}
-.btn:hover{transform:translateY(-2px)} .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn{display:inline-block;border-radius:8px;padding:.6rem 1.2rem;font-size:.875rem;font-weight:700;transition:transform .15s,opacity .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)} .btn:active{transform:translateY(0)} .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .btn-main{background:var(--btn);color:var(--btntext)}.btn-main:hover{box-shadow:0 0 0 2px var(--accent2),0 0 22px color-mix(in srgb,var(--accent2) 60%,transparent)}
 .btn-line{border:1px solid var(--btnline)} .btn-line:hover{border-color:var(--accent2);color:var(--accent2);box-shadow:0 0 14px color-mix(in srgb,var(--accent2) 40%,transparent)}
 .ring{position:relative;padding:4px;border-radius:9999px;overflow:hidden}
 .ring::before{content:'';position:absolute;inset:-50%;background:conic-gradient(var(--accent),var(--accent2),var(--accent));animation:spin 4s linear infinite}
 .ring>div{position:relative;border-radius:9999px;overflow:hidden;background:var(--surface)}
 .caret::after{content:'▌';margin-left:2px;color:var(--accent);animation:blink 1s steps(1) infinite}
-.pf{position:relative;width:11.5rem;height:14.5rem;perspective:900px}
+.pf{position:relative;width:9.5rem;height:12.5rem;perspective:900px;max-width:100%}
+@media(min-width:380px){.pf{width:11rem;height:14rem}}
+@media(min-width:480px){.pf{width:13rem;height:16.5rem}}
 @media(min-width:640px){.pf{width:15rem;height:19rem}}
 .pf-blob{position:absolute;inset:-10%;background:conic-gradient(from 0deg,var(--accent),var(--accent2),var(--accent));filter:blur(34px);opacity:.5;border-radius:42% 58% 63% 37%/41% 44% 56% 59%;animation:morph 9s ease-in-out infinite,spin 16s linear infinite}
 @keyframes morph{50%{border-radius:60% 40% 35% 65%/58% 62% 38% 42%}}
@@ -130,18 +133,26 @@ html{scroll-behavior:smooth}
 .pf-c.tr{top:10px;right:10px;border-left:0;border-bottom:0;border-top-right-radius:8px}
 .pf-c.bl{bottom:10px;left:10px;border-right:0;border-top:0;border-bottom-left-radius:8px}
 .pf-c.br{bottom:10px;right:10px;border-left:0;border-top:0;border-bottom-right-radius:8px}
-.pf-chip{position:absolute;z-index:2;padding:.2rem .65rem;border-radius:9999px;font-size:.7rem;font-weight:700;background:var(--surface);border:1px solid var(--accent2);color:var(--accent2);backdrop-filter:blur(8px);box-shadow:0 0 14px color-mix(in srgb,var(--accent2) 35%,transparent);animation:floaty 5s ease-in-out infinite}
-.pf-chip.c1{top:8%;right:-12%}.pf-chip.c2{top:48%;left:-14%;animation-delay:1.2s}.pf-chip.c3{bottom:-3%;right:-6%;animation-delay:2.4s}
+.pf-chip{position:absolute;z-index:2;padding:.15rem .5rem;border-radius:9999px;font-size:.65rem;font-weight:700;background:var(--surface);border:1px solid var(--accent2);color:var(--accent2);backdrop-filter:blur(8px);box-shadow:0 0 14px color-mix(in srgb,var(--accent2) 35%,transparent);animation:floaty 5s ease-in-out infinite}
+.pf-chip.c1{top:6%;right:0%}.pf-chip.c2{top:48%;left:-2%}.pf-chip.c3{bottom:-2%;right:2%}
+@media(min-width:480px){
+  .pf-chip{padding:.2rem .65rem;font-size:.7rem}
+  .pf-chip.c1{top:8%;right:-6%}.pf-chip.c2{top:48%;left:-8%;animation-delay:1.2s}.pf-chip.c3{bottom:-3%;right:-4%;animation-delay:2.4s}
+}
+@media(min-width:640px){.pf-chip.c1{right:-12%}.pf-chip.c2{left:-14%}.pf-chip.c3{right:-6%}}
 @media(prefers-reduced-motion:reduce){.pf-blob,.pf-scan,.pf-chip{animation:none}}
 .float{animation:floaty 6s ease-in-out infinite}
 .marquee{display:flex;width:max-content;animation:marquee 32s linear infinite}
 .chip{border:1px solid var(--line);border-radius:9999px;padding:.25rem .75rem;font-size:.875rem;transition:border-color .2s,color .2s}
 .chip:hover{border-color:var(--accent);color:var(--accent)}
-.field{width:100%;border-radius:8px;border:1px solid var(--line);background:var(--surface);padding:.5rem .75rem;font-size:.875rem;color:var(--text)}
+.field{width:100%;border-radius:8px;border:1px solid var(--line);background:var(--surface);padding:.6rem .75rem;font-size:.875rem;color:var(--text);transition:border-color .2s}
 .field:focus{outline:2px solid var(--accent)}
 .reveal{opacity:0;transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);will-change:transform,opacity}
 .reveal.up{transform:translateY(40px)}.reveal.left{transform:translateX(-48px)}.reveal.right{transform:translateX(48px)}.reveal.zoom{transform:scale(.92)}
 .reveal.in{opacity:1;transform:none}
+@media(max-width:640px){
+  .reveal.left,.reveal.right,.reveal.up{transform:translateY(16px)}
+}
 .reveal .bar{transform:scaleX(0);transform-origin:left;transition:transform .9s .35s cubic-bezier(.2,.7,.2,1)}
 .reveal.in .bar{transform:scaleX(1)}
 .has-cursor,.has-cursor *{cursor:none!important}
@@ -164,7 +175,93 @@ html{scroll-behavior:smooth}
 @keyframes blink{50%{opacity:0}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 @keyframes marquee{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* ==================== AI AGENT UNIQUE LIVELY & EYE-CATCHING ANIMATIONS ==================== */
+@keyframes aiLivelyFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(2deg) scale(1.02); }
+  50% { transform: translateY(-3px) rotate(-1.5deg) scale(1.01); }
+  75% { transform: translateY(-10px) rotate(1.5deg) scale(1.03); }
+}
+@keyframes aiWiggleNudge {
+  0%, 80%, 100% { transform: rotate(0deg) scale(1); }
+  82% { transform: rotate(-9deg) scale(1.08); }
+  85% { transform: rotate(9deg) scale(1.08); }
+  88% { transform: rotate(-6deg) scale(1.05); }
+  91% { transform: rotate(6deg) scale(1.04); }
+  94% { transform: rotate(-2deg) scale(1.02); }
+}
+@keyframes aiSonarWave {
+  0% { transform: scale(0.9); opacity: 0.85; border: 2px solid var(--accent2); }
+  50% { opacity: 0.4; border: 2px solid var(--accent); }
+  100% { transform: scale(1.4, 1.65); opacity: 0; border: 1px solid var(--accent2); }
+}
+@keyframes aiSonarWave2 {
+  0% { transform: scale(0.9); opacity: 0; }
+  25% { opacity: 0.7; border: 2px solid var(--accent); }
+  100% { transform: scale(1.55, 1.9); opacity: 0; border: 1px solid transparent; }
+}
+@keyframes aiBorderBeam {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes aiAttentionGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent2) 60%, transparent)) drop-shadow(0 0 20px color-mix(in srgb, var(--accent) 35%, transparent));
+  }
+  50% {
+    filter: drop-shadow(0 0 22px color-mix(in srgb, var(--accent2) 90%, transparent)) drop-shadow(0 0 42px color-mix(in srgb, var(--accent) 60%, transparent));
+  }
+}
+@keyframes aiWaveHand {
+  0%, 100% { transform: rotate(0deg); }
+  20%, 60% { transform: rotate(18deg); }
+  40%, 80% { transform: rotate(-18deg); }
+}
+@keyframes aiOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes aiOrbitRev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+@keyframes aiPulseCore {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px var(--accent2)); opacity: .9; }
+  50% { transform: scale(1.12); filter: drop-shadow(0 0 18px var(--accent2)); opacity: 1; }
+}
+@keyframes aiEq1 { 0%, 100% { height: 4px; } 50% { height: 14px; } }
+@keyframes aiEq2 { 0%, 100% { height: 13px; } 50% { height: 5px; } }
+@keyframes aiEq3 { 0%, 100% { height: 6px; } 50% { height: 16px; } }
+@keyframes aiEq4 { 0%, 100% { height: 15px; } 50% { height: 7px; } }
+@keyframes aiEyeBlink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  94% { transform: scaleY(.1); }
+}
+@keyframes aiWindowEnter {
+  0% { opacity: 0; transform: scale(.92) translateY(22px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes aiMsgEnter {
+  0% { opacity: 0; transform: translateY(12px) scale(.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes aiBubblePop {
+  0% { opacity: 0; transform: translateY(10px) scale(.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.ai-lively-float { animation: aiLivelyFloat 4.2s ease-in-out infinite, aiWiggleNudge 6.5s ease-in-out infinite; }
+.ai-sonar-wave { animation: aiSonarWave 2.2s cubic-bezier(0, 0.2, 0.8, 1) infinite; }
+.ai-sonar-wave-2 { animation: aiSonarWave2 2.2s 1.1s cubic-bezier(0, 0.2, 0.8, 1) infinite; }
+.ai-border-beam {
+  background: conic-gradient(from 0deg, transparent 0deg, var(--accent) 90deg, var(--accent2) 180deg, #19e6ff 270deg, transparent 360deg);
+  animation: aiBorderBeam 3.6s linear infinite;
+}
+.ai-attention-glow { animation: aiAttentionGlow 2.8s ease-in-out infinite; }
+.ai-wave-hand { display: inline-block; transform-origin: 70% 70%; animation: aiWaveHand 2s ease-in-out infinite; }
+.ai-orbit { animation: aiOrbit 8s linear infinite; }
+.ai-orbit-rev { animation: aiOrbitRev 6s linear infinite; }
+.ai-pulse-core { animation: aiPulseCore 2.2s ease-in-out infinite; }
+.ai-window-anim { animation: aiWindowEnter .32s cubic-bezier(.16,1,.3,1) forwards; transform-origin: bottom right; }
+.ai-msg-anim { animation: aiMsgEnter .28s cubic-bezier(.16,1,.3,1) forwards; }
+.ai-bubble-anim { animation: aiBubblePop .35s cubic-bezier(.16,1,.3,1) forwards; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+@media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}.reveal{opacity:1!important;transform:none!important;transition:none!important}.ai-lively-float,.ai-sonar-wave,.ai-sonar-wave-2,.ai-border-beam,.ai-attention-glow,.ai-wave-hand,.ai-orbit,.ai-orbit-rev,.ai-pulse-core,.ai-window-anim,.ai-msg-anim,.ai-bubble-anim{animation:none!important}}
 `;
 
 /* ---------------- hooks ---------------- */
@@ -327,8 +424,11 @@ function Scene3D({ dark }) {
     });
 
     const resize = () => {
-      renderer.setSize(el.clientWidth, el.clientHeight);
-      camera.aspect = el.clientWidth / el.clientHeight;
+      if (!el) return;
+      const w = el.clientWidth || 300;
+      const h = el.clientHeight || 300;
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
     };
     resize();
@@ -389,7 +489,7 @@ function Dot({ x1, x2, y, s, color }) {
 function RequestFlow({ reduce }) {
   const nodes = [["Client", 10], ["FastAPI", 220], ["PostgreSQL", 430]];
   return (
-    <svg viewBox="0 0 580 130" className="w-full" role="img" aria-label="Request flow: client to FastAPI to PostgreSQL and back">
+    <svg viewBox="0 0 580 130" className="w-full h-auto block min-w-[320px] sm:min-w-0" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Request flow: client to FastAPI to PostgreSQL and back">
       {nodes.map(([label, x]) => (
         <g key={label}>
           <rect x={x} y="35" width="140" height="56" rx="10" fill="var(--surface)" stroke="var(--line)" />
@@ -554,7 +654,7 @@ function ThreeBg({ dark }) {
 
 function Background({ dark }) {
   return (
-    <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
       <ThreeBg dark={dark} />
       <div className="bggrid" />
       <div className="blob" style={{ left: "-8rem", top: "-6rem", width: "30rem", height: "30rem", background: "var(--accent)" }} />
@@ -781,8 +881,8 @@ function Avatar() {
     const el = box.current;
     if (!el) return;
     const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-    el.style.setProperty("--rx", `${(0.5 - y) * 14}deg`);
-    el.style.setProperty("--ry", `${(x - 0.5) * 16}deg`);
+    el.style.setProperty("--rx", `${(0.5 - y) * 12}deg`);
+    el.style.setProperty("--ry", `${(x - 0.5) * 14}deg`);
     el.style.setProperty("--gx", `${x * 100}%`);
     el.style.setProperty("--gy", `${y * 100}%`);
   };
@@ -792,13 +892,13 @@ function Avatar() {
     ["--rx", "--ry", "--gx", "--gy"].forEach((k) => el.style.removeProperty(k));
   };
   return (
-    <div ref={box} className="pf shrink-0" onPointerMove={tilt} onPointerLeave={reset}>
+    <div ref={box} className="pf shrink-0 mx-auto sm:mx-0" onPointerMove={tilt} onPointerLeave={reset}>
       <div className="pf-blob" aria-hidden="true" />
       <div className="pf-frame">
         {ok ? (
           <img src={PROFILE.photo} alt={PROFILE.name} onError={() => setOk(false)} className="h-full w-full object-cover" />
         ) : (
-          <div className="grid h-full w-full place-items-center text-6xl font-extrabold acc">{initials}</div>
+          <div className="grid h-full w-full place-items-center text-5xl sm:text-6xl font-extrabold acc">{initials}</div>
         )}
         <span className="pf-scan" aria-hidden="true" />
         <span className="pf-glare" aria-hidden="true" />
@@ -824,11 +924,11 @@ function ResponseCard() {
   ];
   const n = useLines(rows.length);
   return (
-    <div className="surface mono w-[17.5rem] rounded-xl p-3 text-[11px] leading-relaxed shadow-xl sm:w-80 sm:text-xs">
+    <div className="surface mono w-full max-w-[275px] sm:max-w-[310px] md:max-w-xs rounded-xl p-3 text-[10px] sm:text-xs leading-relaxed shadow-xl overflow-hidden min-w-0">
       <div className="mb-2 flex gap-1.5">
         <span className="h-2 w-2 rounded-full bg-red-400" /><span className="h-2 w-2 rounded-full bg-yellow-400" /><span className="h-2 w-2 rounded-full bg-green-400" />
       </div>
-      <div className="min-h-[8.5rem] whitespace-pre-wrap">
+      <div className="min-h-[7.5rem] sm:min-h-[8.5rem] whitespace-pre-wrap">
         {rows.slice(0, n).map(([c, t], i) => <div key={i} className={c}>{t}</div>)}
       </div>
     </div>
@@ -837,25 +937,86 @@ function ResponseCard() {
 
 function Section({ id, title, route, intro, children }) {
   return (
-    <section id={id} className="mx-auto max-w-6xl scroll-mt-16 px-6 py-20">
+    <section id={id} className="mx-auto max-w-6xl scroll-mt-16 px-3.5 sm:px-6 py-12 sm:py-20 overflow-hidden w-full max-w-full">
       <Reveal>
-        <div className="flex flex-wrap items-baseline gap-3">
-          <h2 className="text-3xl font-extrabold tracking-tight">{title}</h2>
-          <span className="mono text-sm muted">{route}</span>
+        <div className="flex flex-wrap items-baseline gap-2 sm:gap-3">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{title}</h2>
+          <span className="mono text-xs sm:text-sm muted">{route}</span>
         </div>
-        <div className="bar mt-3 h-1 w-16 rounded" style={{ background: "linear-gradient(90deg,var(--accent),var(--accent2))" }} />
-        {intro && <p className="muted mt-3 max-w-xl">{intro}</p>}
+        <div className="bar mt-2.5 sm:mt-3 h-1 w-16 rounded" style={{ background: "linear-gradient(90deg,var(--accent),var(--accent2))" }} />
+        {intro && <p className="muted mt-3 max-w-xl text-xs sm:text-base leading-relaxed">{intro}</p>}
       </Reveal>
-      <div className="mt-10">{children}</div>
+      <div className="mt-7 sm:mt-10 min-w-0 w-full max-w-full">{children}</div>
     </section>
   );
 }
 
-/* ---------------- AI Assistant / Chatbot (JoyBot) ---------------- */
+/* ---------------- AI Assistant / Chatbot (JoyBot) with Unique Smooth Animation ---------------- */
+function AIAgentAvatar({ isTyping = false, size = "md" }) {
+  const dim = size === "sm" ? "w-8 h-8" : size === "lg" ? "w-12 h-12" : "w-10 h-10";
+  return (
+    <div className={`relative ${dim} flex items-center justify-center shrink-0`}>
+      {/* Outer Holographic Orbital Ring */}
+      <div
+        className="ai-orbit absolute inset-0 rounded-full border border-dashed border-[var(--accent2)] opacity-80"
+        style={{ animationDuration: isTyping ? "3s" : "8s" }}
+      />
+      {/* Inner Rotating Ring */}
+      <div
+        className="ai-orbit-rev absolute inset-[2px] rounded-full border border-dotted border-[var(--accent)] opacity-60"
+        style={{ animationDuration: isTyping ? "2s" : "6s" }}
+      />
+      {/* Pulsing Core Sphere */}
+      <div className="ai-pulse-core relative flex items-center justify-center w-[80%] h-[80%] rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent2)] shadow-[0_0_12px_color-mix(in_srgb,var(--accent2)_60%,transparent)]">
+        {/* Hologram robot face with blinking eyes */}
+        <svg viewBox="0 0 24 24" className="w-[65%] h-[65%] fill-white" aria-hidden="true">
+          {/* Antenna */}
+          <circle cx="12" cy="3" r="1.5" />
+          <path d="M12 4.5v2" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
+          {/* Head */}
+          <rect x="4" y="6.5" width="16" height="12" rx="3.5" />
+          {/* Eyes with blink animation */}
+          <g style={{ transformOrigin: "12px 11px", animation: "aiEyeBlink 4s ease-in-out infinite" }}>
+            <rect x="7" y="10" width="3" height="3" rx="1" fill="#19e6ff" />
+            <rect x="14" y="10" width="3" height="3" rx="1" fill="#19e6ff" />
+          </g>
+          {/* Mouth / Speaker bar */}
+          <path d="M8.5 15h7" stroke="#19e6ff" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function SoundWaveBars({ isTyping = false }) {
+  return (
+    <div className="flex items-center gap-[2.5px] h-4" title={isTyping ? "JoyBot is generating..." : "Neural audio active"}>
+      <span
+        className="w-[2.5px] rounded-full bg-[var(--accent2)]"
+        style={{ animation: `aiEq1 ${isTyping ? "0.45s" : "1.2s"} ease-in-out infinite` }}
+      />
+      <span
+        className="w-[2.5px] rounded-full bg-[var(--accent)]"
+        style={{ animation: `aiEq2 ${isTyping ? "0.4s" : "1s"} ease-in-out infinite` }}
+      />
+      <span
+        className="w-[2.5px] rounded-full bg-cyan-400"
+        style={{ animation: `aiEq3 ${isTyping ? "0.5s" : "1.4s"} ease-in-out infinite` }}
+      />
+      <span
+        className="w-[2.5px] rounded-full bg-[var(--accent2)]"
+        style={{ animation: `aiEq4 ${isTyping ? "0.38s" : "1.1s"} ease-in-out infinite` }}
+      />
+    </div>
+  );
+}
+
 function JoyBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
+  const [showBubble, setShowBubble] = useState(true);
+  const [copiedIndex, setCopiedIndex] = useState(null);
   const [messages, setMessages] = useState([
     {
       sender: "bot",
@@ -872,6 +1033,29 @@ function JoyBot() {
   useEffect(() => {
     if (open) scrollToBottom();
   }, [messages, open, typing]);
+
+  // Auto-dismiss the initial hook bubble after 25s
+  useEffect(() => {
+    const timer = setTimeout(() => setShowBubble(false), 25000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Close on Escape key
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape" && open) setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const copyText = (txt, idx) => {
+    try {
+      navigator.clipboard.writeText(txt);
+      setCopiedIndex(idx);
+      setTimeout(() => setCopiedIndex(null), 1800);
+    } catch {}
+  };
 
   const quickPrompts = [
     { label: "👤 Who are you?", q: "Who are you?" },
@@ -1073,33 +1257,115 @@ function JoyBot() {
 
   return (
     <>
-      {/* Floating Chat Trigger Button */}
-      <button
-        onClick={() => setOpen(!open)}
-        title="Chat with JoyBot"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 rounded-full px-4 py-2.5 bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)] text-white font-bold text-sm shadow-[0_0_25px_color-mix(in_srgb,var(--accent2)_45%,transparent)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
-      >
-        <span className="relative flex h-3 w-3">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-          <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-400" />
-        </span>
-        <span className="text-base">🤖</span>
-        <span className="hidden sm:inline">Ask JoyBot</span>
-      </button>
+      {/* Floating Chat Trigger Button with Attention-Grabbing Lively Motion & Sonar Beacon */}
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end pointer-events-auto">
+        {/* Eye-catching Floating Thought Bubble */}
+        {showBubble && !open && (
+          <div
+            onClick={() => {
+              setOpen(true);
+              setShowBubble(false);
+            }}
+            className="ai-bubble-anim mb-3.5 flex items-center gap-2.5 max-w-[270px] sm:max-w-xs rounded-2xl px-3.5 py-2.5 surface border border-[var(--accent2)] shadow-[0_10px_35px_color-mix(in_srgb,var(--accent2)_35%,transparent)] backdrop-blur-2xl text-xs cursor-pointer group hover:scale-105 active:scale-95 transition-all select-none"
+          >
+            <span className="text-xl ai-wave-hand">👋</span>
+            <div className="flex-1 leading-snug">
+              <p className="font-extrabold text-[var(--accent2)] flex items-center gap-1.5">
+                <span>Ask JoyBot AI</span>
+                <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-400 font-mono border border-cyan-400/30">
+                  NEW
+                </span>
+              </p>
+              <p className="text-[11px] muted group-hover:text-[var(--text)] transition-colors mt-0.5">
+                Click here to explore Joy's skills & CV!
+              </p>
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowBubble(false);
+              }}
+              className="text-xs muted hover:text-[var(--text)] p-1 rounded-full hover:bg-white/10 transition cursor-pointer"
+              title="Dismiss"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        {/* Outer Container with Lively Multi-Axis Floating & Periodic Playful Nudge */}
+        <div className="ai-lively-float relative flex items-center justify-center">
+          {/* Sonar Beacon Radar Waves Radiating Outward */}
+          <span className="ai-sonar-wave absolute inset-0 rounded-full pointer-events-none" />
+          <span className="ai-sonar-wave-2 absolute inset-0 rounded-full pointer-events-none" />
+
+          {/* The Interactive High-Tech Pill Button */}
+          <button
+            onClick={() => {
+              setOpen(!open);
+              setShowBubble(false);
+            }}
+            title={open ? "Close JoyBot AI" : "Chat with JoyBot (AI Assistant)"}
+            aria-label="Toggle JoyBot AI Assistant"
+            className="ai-attention-glow group relative flex items-center gap-2.5 sm:gap-3 rounded-full p-2 pr-4 sm:p-2.5 sm:pr-5 bg-[var(--surface)] backdrop-blur-2xl border border-[var(--accent2)] shadow-[0_0_30px_color-mix(in_srgb,var(--accent2)_55%,transparent)] transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer overflow-hidden"
+          >
+            {/* Spinning Rainbow / Cyan Border Beam */}
+            <span className="ai-border-beam absolute inset-[-150%] rounded-full opacity-65 pointer-events-none" />
+            {/* Inner surface overlay to keep background clean & readable */}
+            <span className="absolute inset-[1.5px] rounded-full bg-[color-mix(in_srgb,var(--surface)_94%,transparent)] backdrop-blur-xl pointer-events-none" />
+
+            {/* Avatar with Live Blinking Hologram and Orbit Rings */}
+            <div className="relative z-10">
+              <AIAgentAvatar isTyping={typing} size="sm" />
+              <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-80" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+              </span>
+            </div>
+
+            {/* Text Info + AI Pill */}
+            <div className="relative z-10 flex flex-col text-left">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs sm:text-sm font-extrabold tracking-tight text-[var(--text)] group-hover:text-[var(--accent2)] transition-colors">
+                  JoyBot
+                </span>
+                <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)] text-white shadow-[0_0_10px_var(--accent2)] animate-pulse">
+                  AI
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="text-[10px] mono text-emerald-400 font-bold flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+                  Online
+                </span>
+                <span className="text-[9px] mono muted hidden xs:inline">· Ready</span>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
 
       {/* Chat Window Modal */}
       {open && (
-        <div className="fixed bottom-20 right-4 sm:right-6 z-50 w-[92vw] sm:w-[410px] h-[540px] max-h-[85vh] rounded-2xl surface backdrop-blur-2xl border border-[var(--line)] shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
+        <div className="ai-window-anim fixed bottom-18 sm:bottom-22 right-3 left-3 sm:left-auto sm:right-6 z-50 w-auto sm:w-[410px] h-[520px] max-h-[82vh] rounded-2xl surface backdrop-blur-2xl border border-[var(--line)] shadow-2xl flex flex-col overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--surface)_90%,black)]">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--surface)_92%,black)]">
             <div className="flex items-center gap-2.5">
               <div className="relative">
-                <span className="text-xl">🤖</span>
-                <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-400" />
+                <AIAgentAvatar isTyping={typing} size="sm" />
+                <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" />
               </div>
               <div>
-                <h4 className="font-extrabold text-sm leading-tight">JoyBot · AI Assistant</h4>
-                <p className="text-[11px] mono muted">Ask in বাংলা or English</p>
+                <div className="flex items-center gap-2">
+                  <h4 className="font-extrabold text-sm leading-tight text-[var(--text)]">JoyBot</h4>
+                  <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                    AI AGENT
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <p className="text-[11px] mono muted">Python & FastAPI · বাংলা / EN</p>
+                  <SoundWaveBars isTyping={typing} />
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-1">
@@ -1129,30 +1395,61 @@ function JoyBot() {
           </div>
 
           {/* Messages Feed */}
-          <div className="flex-1 p-3 sm:p-4 overflow-y-auto space-y-3 text-xs sm:text-sm">
+          <div className="flex-1 p-3 sm:p-4 overflow-y-auto space-y-3.5 text-xs sm:text-sm">
+            {/* AI Welcome Notification Card */}
+            <div className="p-3 rounded-xl surface border border-[var(--line)] bg-gradient-to-r from-[color-mix(in_srgb,var(--accent)_8%,transparent)] to-[color-mix(in_srgb,var(--accent2)_8%,transparent)] text-xs space-y-1">
+              <p className="font-bold flex items-center gap-1.5 text-[var(--accent2)]">
+                <span>⚡</span> Interactive Portfolio AI Agent
+              </p>
+              <p className="muted text-[11px] leading-relaxed">
+                Trained on Joy's backend stack (FastAPI, PostgreSQL), CST Diploma, projects, and career background. Click prompts below or type your inquiry!
+              </p>
+            </div>
+
             {messages.map((m, idx) => (
               <div
                 key={idx}
-                className={`flex flex-col ${m.sender === "user" ? "items-end" : "items-start"}`}
+                className={`ai-msg-anim flex flex-col ${m.sender === "user" ? "items-end" : "items-start"}`}
               >
-                <div
-                  className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 whitespace-pre-wrap leading-relaxed ${
-                    m.sender === "user"
-                      ? "bg-[var(--accent)] text-white rounded-br-xs shadow-md"
-                      : "surface border border-[var(--line)] text-[var(--text)] rounded-bl-xs shadow-sm"
-                  }`}
-                >
-                  {m.sender === "bot" ? formatText(m.text) : m.text}
+                <div className="flex items-end gap-1.5 max-w-[92%] sm:max-w-[85%]">
+                  {m.sender === "bot" && (
+                    <span className="text-base mb-1 select-none">🤖</span>
+                  )}
+                  <div
+                    className={`rounded-2xl px-3.5 py-2.5 whitespace-pre-wrap leading-relaxed ${
+                      m.sender === "user"
+                        ? "bg-gradient-to-r from-[var(--accent)] to-[color-mix(in_srgb,var(--accent)_80%,var(--accent2))] text-white rounded-br-xs shadow-md"
+                        : "surface border border-[var(--line)] text-[var(--text)] rounded-bl-xs shadow-sm"
+                    }`}
+                  >
+                    {m.sender === "bot" ? formatText(m.text) : m.text}
+                  </div>
                 </div>
-                <span className="text-[10px] mono muted mt-1 px-1">{m.time}</span>
+                <div className="flex items-center gap-2 mt-1 px-1">
+                  <span className="text-[10px] mono muted">{m.time}</span>
+                  {m.sender === "bot" && (
+                    <button
+                      onClick={() => copyText(m.text, idx)}
+                      className="text-[10px] mono muted hover:text-[var(--accent2)] cursor-pointer"
+                      title="Copy response"
+                    >
+                      {copiedIndex === idx ? "Copied ✓" : "Copy"}
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
 
+            {/* Neural Typing Indicator */}
             {typing && (
-              <div className="flex items-center gap-1.5 surface border border-[var(--line)] p-2.5 rounded-2xl rounded-bl-xs w-20">
-                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-bounce" />
-                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-bounce [animation-delay:0.15s]" />
-                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-bounce [animation-delay:0.3s]" />
+              <div className="ai-msg-anim flex items-center gap-2 surface border border-[var(--line)] px-3 py-2 rounded-2xl rounded-bl-xs w-fit">
+                <AIAgentAvatar isTyping={true} size="sm" />
+                <div className="flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-bounce" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)] animate-bounce [animation-delay:0.15s]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent2)] animate-bounce [animation-delay:0.3s]" />
+                </div>
+                <span className="text-[11px] mono muted ml-1">JoyBot is thinking...</span>
               </div>
             )}
             <div ref={messagesEndRef} />
@@ -1180,7 +1477,7 @@ function JoyBot() {
                     },
                   ]);
                 }}
-                className="whitespace-nowrap px-2.5 py-1 rounded-full border border-[var(--line)] bg-[var(--surface)] text-[11px] muted hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition cursor-pointer"
+                className="whitespace-nowrap px-2.5 py-1 rounded-full border border-[var(--line)] bg-[var(--surface)] text-[11px] muted hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition-all hover:scale-102 active:scale-98 cursor-pointer"
               >
                 {p.label}
               </button>
@@ -1211,12 +1508,12 @@ function JoyBot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask in বাংলা or English..."
-              className="flex-1 px-3 py-2 rounded-xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--surface)_80%,transparent)] text-xs text-[var(--text)] outline-none focus:border-[var(--accent)] transition"
+              className="flex-1 px-3 py-2 rounded-xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--surface)_80%,transparent)] text-base sm:text-xs text-[var(--text)] outline-none focus:border-[var(--accent)] transition"
             />
             <button
               type="submit"
               disabled={!input.trim()}
-              className="btn btn-main !py-2 !px-3.5 !text-xs rounded-xl flex items-center justify-center disabled:opacity-40 cursor-pointer"
+              className="btn btn-main !py-2 !px-3.5 !text-xs rounded-xl flex items-center justify-center disabled:opacity-40 cursor-pointer shadow-md"
             >
               ➤
             </button>
@@ -1303,238 +1600,290 @@ export default function App() {
   const marquee = [...SKILLS.Backend, ...SKILLS.Database, ...SKILLS.Frontend];
 
   return (
-    <div className="page relative min-h-screen">
+    <div className="page relative min-h-screen w-full overflow-x-hidden">
       <style>{STYLES}</style>
       <Background dark={dark} />
       <Cursor />
       <JoyBot />
 
-      <div className="relative z-10">
-      <div className="fixed left-0 top-0 z-50 h-1" style={{ boxShadow: "0 0 12px var(--accent2)", width: `${pct}%`, background: "linear-gradient(90deg,var(--accent),var(--accent2))" }} />
+      <div className="relative z-10 w-full overflow-x-hidden">
+        <div className="fixed left-0 top-0 z-50 h-1" style={{ boxShadow: "0 0 12px var(--accent2)", width: `${pct}%`, background: "linear-gradient(90deg,var(--accent),var(--accent2))" }} />
 
-      {/* Navbar */}
-      <header className="sticky top-0 z-40 backdrop-blur" style={{ background: "color-mix(in srgb, var(--bg) 85%, transparent)", borderBottom: "1px solid var(--line)" }}>
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-          <a href="#home" className="mono font-bold">joy<span className="acc flicker">.dev</span></a>
-          <div className="hidden items-center gap-6 text-sm md:flex">
-            {links.map((l) => (
-              <a key={l} href={`#${l}`} className={`capitalize hover:underline ${active === l ? "acc font-bold" : ""}`}>{l}</a>
-            ))}
-            <a href={PROFILE.cv} download className="btn btn-line !py-1.5">CV</a>
-            {themeBtn}
-          </div>
-          <div className="flex items-center gap-2 md:hidden">
-            {themeBtn}
-            <button onClick={() => setMenu(!menu)} className="btn btn-line !px-3 !py-1.5">{menu ? "Close" : "Menu"}</button>
-          </div>
-        </nav>
-        {menu && (
-          <div className="flex flex-col gap-3 px-6 py-4 text-sm md:hidden" style={{ borderTop: "1px solid var(--line)" }}>
-            {links.map((l) => <a key={l} href={`#${l}`} onClick={() => setMenu(false)} className="capitalize">{l}</a>)}
-            <a href={PROFILE.cv} download>Download CV</a>
-          </div>
-        )}
-      </header>
-
-      {/* Hero: photo + name together, 3D scene beside */}
-      <div id="home" className="relative overflow-hidden">
-        {TOKENS.map(([t, l, tp], i) => (
-          <span key={t} className="float mono muted pointer-events-none absolute hidden text-xs opacity-40 md:block" style={{ left: l, top: tp, animationDelay: `${i * 0.7}s` }}>{t}</span>
-        ))}
-        <div className="relative mx-auto grid max-w-6xl items-center gap-6 px-6 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:py-20">
-          <div>
-            <p className="mono muted mb-3 text-sm"><span className="acc2 flicker">joy@dev</span>:<span className="acc">~/portfolio</span>$ whoami</p>
-
-            {/* Live Server & Backend Health Indicator Bar */}
-            <div className="mb-6 flex flex-wrap items-center gap-2 text-xs mono">
-              <div className="lineb flex items-center gap-1.5 rounded-full px-3 py-1 bg-[var(--surface)]">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                </span>
-                <span className="font-bold text-emerald-400">FastAPI</span>: <span className="opacity-90">Online</span>
-              </div>
-              <div className="lineb flex items-center gap-1.5 rounded-full px-3 py-1 bg-[var(--surface)]">
-                <span className="h-2 w-2 rounded-full bg-cyan-400" />
-                <span className="font-bold text-cyan-400">PostgreSQL</span>: <span className="opacity-90">Connected</span>
-              </div>
-              <div className="lineb flex items-center gap-1.5 rounded-full px-3 py-1 bg-[var(--surface)]">
-                <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
-                <span>Latency: <span className="acc font-bold">14ms</span></span>
-              </div>
-              <div className="lineb flex items-center gap-1.5 rounded-full px-3 py-1 bg-[var(--surface)] text-amber-300">
-                <span>🚀 Ready to Hire</span>
-              </div>
-            </div>
-
-            <div className="mt-6 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-              <Avatar />
-              <div>
-                <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">{PROFILE.name}</h1>
-                <p className="mono acc caret mt-2 min-h-[1.75rem] text-sm font-semibold sm:text-lg">{role}</p>
-              </div>
-            </div>
-            <p className="muted mt-6 max-w-lg">{PROFILE.tagline}</p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <a href={PROFILE.cv} download className="btn btn-main">Download CV</a>
-              <a href="#projects" className="btn btn-line">View projects</a>
-              <a href="#contact" className="btn btn-line">Contact me</a>
-            </div>
-            <div className="mt-6 flex flex-wrap gap-3">{SOCIALS.map((s) => <SocialLink key={s.id} s={s} />)}</div>
-          </div>
-          <div className="relative mx-auto h-[400px] w-full max-w-[460px] sm:h-[460px]" style={{ transform: "translateY(calc(var(--sy, 0) * 0.15px))" }}>
-            <Scene3D dark={dark} />
-            <div className="absolute -bottom-2 right-0 float"><ResponseCard /></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Tech marquee */}
-      <div className="overflow-hidden py-3" style={{ borderTop: "1px solid var(--line)", borderBottom: "1px solid var(--line)" }}>
-        <div className="marquee mono text-sm muted">
-          {[...marquee, ...marquee].map((t, i) => (
-            <span key={i} className="mx-6 whitespace-nowrap">{t} <span className="acc2">/</span></span>
-          ))}
-        </div>
-      </div>
-
-      {/* About */}
-      <Section id="about" title="About me" route="GET /about">
-        <div className="grid gap-10 lg:grid-cols-2">
-          <Reveal from="left" className="muted space-y-4">
-            {ABOUT.map((p) => <p key={p}>{p}</p>)}
-            <ul className="mt-6 space-y-4 pl-5" style={{ borderLeft: "2px solid var(--line)" }}>
-              {JOURNEY.map((j) => (
-                <li key={j.what}>
-                  <p className="acc text-xs font-bold">{j.when}</p>
-                  <p className="font-bold" style={{ color: "var(--text)" }}>{j.what}</p>
-                  <p className="text-sm">{j.sub}</p>
-                </li>
+        {/* Navbar */}
+        <header className="sticky top-0 z-40 backdrop-blur-md" style={{ background: "color-mix(in srgb, var(--bg) 85%, transparent)", borderBottom: "1px solid var(--line)" }}>
+          <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-3">
+            <a href="#home" className="mono font-bold text-base sm:text-lg flex items-center gap-1.5">
+              <span>joy</span><span className="acc flicker">.dev</span>
+              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded border border-[var(--line)] muted hidden sm:inline">FastAPI</span>
+            </a>
+            <div className="hidden items-center gap-5 lg:gap-6 text-sm md:flex">
+              {links.map((l) => (
+                <a key={l} href={`#${l}`} className={`capitalize transition-colors hover:text-[var(--accent2)] ${active === l ? "acc font-bold" : "muted"}`}>{l}</a>
               ))}
-            </ul>
-          </Reveal>
-          <Reveal from="right" className="space-y-6">
-            <div className="surface rounded-xl p-4">
-              <p className="mono muted mb-2 text-xs">how my APIs work</p>
-              <RequestFlow reduce={reduce} />
+              <a href={PROFILE.cv} download className="btn btn-line !py-1.5 !px-3">CV</a>
+              {themeBtn}
             </div>
-            <div className="mono overflow-hidden rounded-xl text-slate-200" style={{ background: "var(--code)", border: "1px solid var(--line)" }}>
-              <div className="px-4 py-2 text-xs text-slate-400" style={{ borderBottom: "1px solid var(--line)" }}>routers/posts.py</div>
-              <pre className="overflow-x-auto p-4 text-xs leading-relaxed"><Code text={SNIPPET} /></pre>
-            </div>
-          </Reveal>
-        </div>
-      </Section>
-
-      {/* Skills */}
-      <Section id="skills" title="What I do" route="GET /skills" intro="The work I can take on, and the tools I use for it.">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((s, i) => (
-            <Reveal key={s.t} delay={i * 120} from="zoom" className="h-full">
-              <div className="surface zap h-full rounded-xl p-5 transition hover:-translate-y-1">
-                <h3 className="font-bold">{s.t}</h3>
-                <p className="muted mt-2 text-sm">{s.d}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-        <div className="mt-12 grid gap-8 sm:grid-cols-2">
-          {Object.entries(SKILLS).map(([g, items], gi) => (
-            <Reveal key={g} delay={gi * 120} from={gi % 2 ? "right" : "left"}>
-              <h3 className="acc mb-3 font-bold">{g}</h3>
-              <ul className="flex flex-wrap gap-2">{items.map((s) => <li key={s} className="chip">{s}</li>)}</ul>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      {/* Projects */}
-      <Section id="projects" title="Projects" route="GET /projects" intro="Each project is a working API with source code. Open the code to see the schema, routes and README.">
-        <div className="grid gap-6 md:grid-cols-2">
-          {PROJECTS.map((p, i) => (
-            <Reveal key={p.title} delay={(i % 2) * 150} className="h-full"><article className="surface zap flex h-full flex-col rounded-xl p-6 transition hover:-translate-y-1">
-              <h3 className="text-xl font-extrabold">{p.title}</h3>
-              <p className="muted mt-2 text-sm">{p.desc}</p>
-              <ul className="mt-4 list-inside list-disc space-y-1 text-sm">{p.features.map((f) => <li key={f}>{f}</li>)}</ul>
-              <div className="mono mt-4 space-y-1 rounded-lg p-3 text-xs" style={{ background: "var(--code)", color: "#e2e8f0" }}>
-                {p.endpoints.map((e) => {
-                  const [m, ...rest] = e.split(" ");
-                  return <div key={e}><span style={{ color: m === "GET" ? "#19e6ff" : "#7b9bff" }} className="font-bold">{m}</span> {rest.join(" ")}</div>;
-                })}
-              </div>
-              <ul className="mt-4 flex flex-wrap gap-2 text-xs">{p.stack.map((t) => <li key={t} className="chip !px-2 !py-0.5 !text-xs">{t}</li>)}</ul>
-              <div className="mt-5 flex gap-3">
-                <a href={p.code} target="_blank" rel="noreferrer" className="btn btn-line !py-1.5">Source code</a>
-                {p.live && <a href={p.live} target="_blank" rel="noreferrer" className="btn btn-main !py-1.5">Live demo</a>}
-              </div>
-            </article></Reveal>
-          ))}
-        </div>
-      </Section>
-
-      {/* Contact */}
-      <Section id="contact" title="Let's work together" route="POST /contact" intro="I'm looking for my first junior backend developer role. Send a message, or find me on these platforms.">
-        <div className="grid gap-10 md:grid-cols-2">
-          <Reveal from="left">
-            <div className="flex flex-wrap items-center gap-3">
-              <a href={`mailto:${PROFILE.email}`} className="acc font-bold hover:underline">{PROFILE.email}</a>
-              <button onClick={copyMail} className="btn btn-line !px-2 !py-1 !text-xs">{copied ? "Copied" : "Copy"}</button>
-            </div>
-            <p className="muted mt-2 text-sm">{PROFILE.location}</p>
-            <div className="mt-6 flex flex-wrap gap-3">{SOCIALS.map((s) => <SocialLink key={s.id} s={s} big />)}</div>
-            <a href={PROFILE.cv} download className="btn btn-main mt-8">Download CV</a>
-          </Reveal>
-          <Reveal from="right">
-            <form onSubmit={send} className="space-y-3">
-              <input
-                required
-                className="field"
-                placeholder="Your name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-              />
-              <input
-                required
-                className="field"
-                type="email"
-                placeholder="Your email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-              />
-              <textarea
-                required
-                className="field"
-                rows={5}
-                placeholder="Message"
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-              />
+            <div className="flex items-center gap-2 md:hidden">
+              {themeBtn}
               <button
-                type="submit"
-                disabled={status === "submitting"}
-                className="btn btn-main disabled:opacity-50"
+                onClick={() => setMenu(!menu)}
+                aria-label="Toggle navigation menu"
+                className="btn btn-line !px-3 !py-1.5 flex items-center gap-1.5 font-mono text-xs cursor-pointer"
               >
-                {status === "submitting" ? "Sending..." : "Send message"}
+                <span>{menu ? "✕" : "☰"}</span>
+                <span>{menu ? "Close" : "Menu"}</span>
               </button>
+            </div>
+          </nav>
+          {menu && (
+            <div className="flex flex-col gap-2.5 px-6 py-4 text-sm md:hidden surface border-b border-[var(--line)] shadow-xl animate-in fade-in slide-in-from-top-2 duration-200">
+              {links.map((l) => (
+                <a
+                  key={l}
+                  href={`#${l}`}
+                  onClick={() => setMenu(false)}
+                  className={`capitalize py-2 px-2.5 rounded-lg transition-colors flex items-center justify-between ${active === l ? "acc font-bold bg-white/5" : "muted"}`}
+                >
+                  <span>{l}</span>
+                  <span className="text-xs opacity-50">→</span>
+                </a>
+              ))}
+              <div className="pt-2 border-t border-[var(--line)] flex gap-2">
+                <a
+                  href={PROFILE.cv}
+                  download
+                  onClick={() => setMenu(false)}
+                  className="btn btn-main flex-1 text-center !py-2"
+                >
+                  Download CV
+                </a>
+              </div>
+            </div>
+          )}
+        </header>
 
-              {status === "success" && (
-                <p className="rounded-lg bg-emerald-500/10 p-2.5 text-sm font-semibold text-emerald-400">
-                  ✓ {statusMsg}
-                </p>
-              )}
-              {status === "error" && (
-                <p className="rounded-lg bg-rose-500/10 p-2.5 text-sm font-semibold text-rose-400">
-                  ✗ {statusMsg}
-                </p>
-              )}
-            </form>
-          </Reveal>
+        {/* Hero: photo + name together, 3D scene beside */}
+        <div id="home" className="relative overflow-hidden w-full">
+          {TOKENS.map(([t, l, tp], i) => (
+            <span key={t} className="float mono muted pointer-events-none absolute hidden text-xs opacity-40 lg:block" style={{ left: l, top: tp, animationDelay: `${i * 0.7}s` }}>{t}</span>
+          ))}
+          <div className="relative mx-auto grid max-w-6xl items-center gap-8 lg:gap-10 px-4 sm:px-6 py-10 sm:py-14 lg:grid-cols-[1.1fr_0.9fr] lg:py-20">
+            <div>
+              <p className="mono muted mb-3 text-xs sm:text-sm"><span className="acc2 flicker">joy@dev</span>:<span className="acc">~/portfolio</span>$ whoami</p>
+
+              {/* Live Server & Backend Health Indicator Bar */}
+              <div className="mb-6 flex flex-wrap items-center gap-2 text-[11px] sm:text-xs mono">
+                <div className="lineb flex items-center gap-1.5 rounded-full px-2.5 sm:px-3 py-1 bg-[var(--surface)]">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  </span>
+                  <span className="font-bold text-emerald-400">FastAPI</span>: <span className="opacity-90">Online</span>
+                </div>
+                <div className="lineb flex items-center gap-1.5 rounded-full px-2.5 sm:px-3 py-1 bg-[var(--surface)]">
+                  <span className="h-2 w-2 rounded-full bg-cyan-400" />
+                  <span className="font-bold text-cyan-400">PostgreSQL</span>: <span className="opacity-90">Connected</span>
+                </div>
+                <div className="lineb flex items-center gap-1.5 rounded-full px-2.5 sm:px-3 py-1 bg-[var(--surface)]">
+                  <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
+                  <span>Latency: <span className="acc font-bold">14ms</span></span>
+                </div>
+                <div className="lineb flex items-center gap-1.5 rounded-full px-2.5 sm:px-3 py-1 bg-[var(--surface)] text-amber-300">
+                  <span>🚀 Ready to Hire</span>
+                </div>
+              </div>
+
+              <div className="mt-4 sm:mt-6 flex flex-col items-center sm:items-start md:flex-row md:items-center gap-4 sm:gap-6 text-center sm:text-left min-w-0 w-full">
+                <Avatar />
+                <div className="min-w-0 max-w-full">
+                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight break-words">{PROFILE.name}</h1>
+                  <p className="mono acc caret mt-1.5 sm:mt-2 min-h-[1.5rem] sm:min-h-[1.75rem] text-xs font-semibold sm:text-lg break-words">{role}</p>
+                </div>
+              </div>
+              <p className="muted mt-4 sm:mt-6 max-w-lg text-xs sm:text-base mx-auto sm:mx-0 text-center sm:text-left leading-relaxed break-words">{PROFILE.tagline}</p>
+              <div className="mt-5 sm:mt-7 flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">
+                <a href={PROFILE.cv} download className="btn btn-main !text-xs sm:!text-sm">Download CV</a>
+                <a href="#projects" className="btn btn-line !text-xs sm:!text-sm">View projects</a>
+                <a href="#contact" className="btn btn-line !text-xs sm:!text-sm">Contact me</a>
+              </div>
+              <div className="mt-4 sm:mt-6 flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">{SOCIALS.map((s) => <SocialLink key={s.id} s={s} />)}</div>
+            </div>
+
+            {/* 3D Scene + ResponseCard (Cleanly separated in layout on mobile, floating on desktop) */}
+            <div className="relative mx-auto w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[460px] mt-4 lg:mt-0 flex flex-col items-center min-w-0">
+              <div className="relative h-[210px] xs:h-[250px] sm:h-[340px] lg:h-[440px] w-full overflow-hidden rounded-2xl">
+                <Scene3D dark={dark} />
+              </div>
+              <div className="mt-3 lg:mt-0 lg:absolute lg:-bottom-2 lg:right-0 float w-full flex justify-center lg:w-auto min-w-0">
+                <ResponseCard />
+              </div>
+            </div>
+          </div>
         </div>
-      </Section>
 
-      <footer className="muted py-6 text-center text-sm" style={{ borderTop: "1px solid var(--line)" }}>
-        © {new Date().getFullYear()} {PROFILE.name} · Junior Backend Developer Portfolio
-      </footer>
+        {/* Tech marquee */}
+        <div className="overflow-hidden py-3 w-full max-w-full" style={{ borderTop: "1px solid var(--line)", borderBottom: "1px solid var(--line)" }}>
+          <div className="marquee mono text-xs sm:text-sm muted">
+            {[...marquee, ...marquee].map((t, i) => (
+              <span key={i} className="mx-4 sm:mx-6 whitespace-nowrap">{t} <span className="acc2">/</span></span>
+            ))}
+          </div>
+        </div>
+
+        {/* About */}
+        <Section id="about" title="About me" route="GET /about">
+          <div className="grid gap-8 lg:gap-10 lg:grid-cols-2 items-start min-w-0 w-full max-w-full">
+            <Reveal from="left" className="min-w-0 w-full max-w-full muted space-y-4 text-xs sm:text-base leading-relaxed break-words">
+              {ABOUT.map((p) => <p key={p} className="break-words">{p}</p>)}
+              <ul className="mt-5 sm:mt-6 space-y-4 pl-3.5 sm:pl-5" style={{ borderLeft: "2px solid var(--line)" }}>
+                {JOURNEY.map((j) => (
+                  <li key={j.what} className="min-w-0">
+                    <p className="acc text-xs font-bold">{j.when}</p>
+                    <p className="font-bold text-sm sm:text-base break-words" style={{ color: "var(--text)" }}>{j.what}</p>
+                    <p className="text-xs sm:text-sm break-words">{j.sub}</p>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+            <Reveal from="right" className="min-w-0 w-full max-w-full space-y-4 sm:space-y-6">
+              <div className="surface rounded-xl p-3 sm:p-4 min-w-0 w-full max-w-full overflow-hidden">
+                <p className="mono muted mb-2 text-xs flex items-center justify-between">
+                  <span>how my APIs work</span>
+                  <span className="sm:hidden text-[10px] opacity-60">← scroll →</span>
+                </p>
+                <div className="w-full overflow-x-auto min-w-0">
+                  <RequestFlow reduce={reduce} />
+                </div>
+              </div>
+              <div className="mono overflow-hidden rounded-xl text-slate-200 min-w-0 w-full max-w-full" style={{ background: "var(--code)", border: "1px solid var(--line)" }}>
+                <div className="px-3 sm:px-4 py-2 text-xs text-slate-400" style={{ borderBottom: "1px solid var(--line)" }}>routers/posts.py</div>
+                <pre className="overflow-x-auto p-3 sm:p-4 text-[10px] sm:text-xs leading-relaxed max-w-full"><Code text={SNIPPET} /></pre>
+              </div>
+            </Reveal>
+          </div>
+        </Section>
+
+        {/* Skills */}
+        <Section id="skills" title="What I do" route="GET /skills" intro="The work I can take on, and the tools I use for it.">
+          <div className="grid gap-3.5 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 min-w-0 w-full max-w-full">
+            {SERVICES.map((s, i) => (
+              <Reveal key={s.t} delay={i * 120} from="zoom" className="h-full min-w-0">
+                <div className="surface zap h-full rounded-xl p-4 sm:p-5 transition hover:-translate-y-1 min-w-0">
+                  <h3 className="font-bold text-base sm:text-lg">{s.t}</h3>
+                  <p className="muted mt-2 text-xs sm:text-sm leading-relaxed">{s.d}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <div className="mt-8 sm:mt-12 grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 min-w-0 w-full max-w-full">
+            {Object.entries(SKILLS).map(([g, items], gi) => (
+              <Reveal key={g} delay={gi * 120} from={gi % 2 ? "right" : "left"} className="min-w-0">
+                <h3 className="acc mb-3 font-bold text-base sm:text-lg">{g}</h3>
+                <ul className="flex flex-wrap gap-1.5 sm:gap-2">{items.map((s) => <li key={s} className="chip text-xs sm:text-sm">{s}</li>)}</ul>
+              </Reveal>
+            ))}
+          </div>
+        </Section>
+
+        {/* Projects */}
+        <Section id="projects" title="Projects" route="GET /projects" intro="Each project is a working API with source code. Open the code to see the schema, routes and README.">
+          <div className="grid gap-5 sm:gap-6 grid-cols-1 md:grid-cols-2 min-w-0 w-full max-w-full">
+            {PROJECTS.map((p, i) => (
+              <Reveal key={p.title} delay={(i % 2) * 150} className="h-full min-w-0">
+                <article className="surface zap flex h-full flex-col justify-between rounded-xl p-4 sm:p-6 transition hover:-translate-y-1 min-w-0 w-full max-w-full overflow-hidden">
+                  <div className="min-w-0">
+                    <h3 className="text-lg sm:text-xl font-extrabold">{p.title}</h3>
+                    <p className="muted mt-2 text-xs sm:text-sm leading-relaxed">{p.desc}</p>
+                    <ul className="mt-3 sm:mt-4 list-inside list-disc space-y-1 text-xs sm:text-sm">
+                      {p.features.map((f) => <li key={f}>{f}</li>)}
+                    </ul>
+                    <div className="mono mt-3 sm:mt-4 space-y-1 rounded-lg p-2.5 sm:p-3 text-[10px] sm:text-xs overflow-x-auto min-w-0 max-w-full" style={{ background: "var(--code)", color: "#e2e8f0" }}>
+                      {p.endpoints.map((e) => {
+                        const [m, ...rest] = e.split(" ");
+                        return (
+                          <div key={e} className="whitespace-nowrap">
+                            <span style={{ color: m === "GET" ? "#19e6ff" : "#7b9bff" }} className="font-bold">{m}</span> {rest.join(" ")}
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <ul className="mt-3 sm:mt-4 flex flex-wrap gap-1.5 sm:gap-2 text-xs">
+                      {p.stack.map((t) => <li key={t} className="chip !px-2 !py-0.5 !text-[11px] sm:!text-xs">{t}</li>)}
+                    </ul>
+                  </div>
+                  <div className="mt-5 flex flex-wrap gap-2.5 sm:gap-3 pt-2">
+                    <a href={p.code} target="_blank" rel="noreferrer" className="btn btn-line !py-1.5 !px-3 !text-xs sm:!text-sm">Source code</a>
+                    {p.live && <a href={p.live} target="_blank" rel="noreferrer" className="btn btn-main !py-1.5 !px-3 !text-xs sm:!text-sm">Live demo</a>}
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </Section>
+
+        {/* Contact */}
+        <Section id="contact" title="Let's work together" route="POST /contact" intro="I'm looking for my first junior backend developer role. Send a message, or find me on these platforms.">
+          <div className="grid gap-8 md:grid-cols-2 min-w-0 w-full max-w-full">
+            <Reveal from="left" className="min-w-0 w-full max-w-full">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <a href={`mailto:${PROFILE.email}`} className="acc font-bold hover:underline text-xs sm:text-base break-all">{PROFILE.email}</a>
+                <button onClick={copyMail} className="btn btn-line !px-2.5 !py-1 !text-xs cursor-pointer">{copied ? "Copied ✓" : "Copy"}</button>
+              </div>
+              <p className="muted mt-2 text-xs sm:text-sm">{PROFILE.location}</p>
+              <div className="mt-5 sm:mt-6 flex flex-wrap gap-2 sm:gap-3">{SOCIALS.map((s) => <SocialLink key={s.id} s={s} big />)}</div>
+              <a href={PROFILE.cv} download className="btn btn-main mt-6 sm:mt-8 inline-block !text-xs sm:!text-sm">Download CV</a>
+            </Reveal>
+            <Reveal from="right" className="min-w-0 w-full max-w-full">
+              <form onSubmit={send} className="space-y-3 min-w-0 w-full max-w-full">
+                <input
+                  required
+                  className="field text-base sm:text-sm"
+                  placeholder="Your name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
+                <input
+                  required
+                  className="field text-base sm:text-sm"
+                  type="email"
+                  placeholder="Your email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+                <textarea
+                  required
+                  className="field text-base sm:text-sm"
+                  rows={5}
+                  placeholder="Message"
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                />
+                <button
+                  type="submit"
+                  disabled={status === "submitting"}
+                  className="btn btn-main w-full sm:w-auto disabled:opacity-50 cursor-pointer !text-xs sm:!text-sm"
+                >
+                  {status === "submitting" ? "Sending..." : "Send message"}
+                </button>
+
+                {status === "success" && (
+                  <p className="rounded-lg bg-emerald-500/10 p-2.5 text-xs sm:text-sm font-semibold text-emerald-400">
+                    ✓ {statusMsg}
+                  </p>
+                )}
+                {status === "error" && (
+                  <p className="rounded-lg bg-rose-500/10 p-2.5 text-xs sm:text-sm font-semibold text-rose-400">
+                    ✗ {statusMsg}
+                  </p>
+                )}
+              </form>
+            </Reveal>
+          </div>
+        </Section>
+
+        <footer className="muted py-6 text-center text-xs sm:text-sm px-4" style={{ borderTop: "1px solid var(--line)" }}>
+          © {new Date().getFullYear()} {PROFILE.name} · Junior Backend Developer Portfolio
+        </footer>
       </div>
     </div>
   );
